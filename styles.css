@@ -1,0 +1,276 @@
+/* ==========================================================================
+   Crunchyroll Clone - custom styles
+   (Most styling comes from Tailwind utility classes in index.html / script.js)
+   ========================================================================== */
+
+   :root {
+    --cr-orange: #ff640a;
+    --cr-header: #232323;
+    --cr-panel: #141414;
+    --hero-interval: 7s;   /* keep in sync with HERO_INTERVAL_MS in script.js */
+}
+
+/* ---------- Base ---------- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ---------- Scrollbars ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+    background: #3a3a3a;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cr-orange);
+}
+
+/* Hide scrollbars on horizontal rows (still scrollable) */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ---------- Header ---------- */
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0 1rem;
+    color: #e5e5e5;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+}
+.nav-link:hover,
+.nav-link[aria-expanded="true"] {
+    background: var(--cr-panel);
+    color: #fff;
+}
+
+.header-icon-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: #d4d4d4;
+    transition: color 0.15s;
+}
+.header-icon-btn:hover {
+    color: #fff;
+}
+
+/* Links inside the Categories menu */
+.menu-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.7rem 1.5rem;
+    color: #e5e5e5;
+    transition: background 0.15s, color 0.15s;
+}
+.menu-link:hover {
+    background: #232323;
+    color: #fff;
+}
+
+/* Genre links (desktop menu + mobile menu) */
+.genre-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem;
+    border-radius: 4px;
+    color: #d4d4d4;
+    transition: background 0.15s, color 0.15s;
+}
+.genre-link:hover {
+    background: #232323;
+    color: #fff;
+}
+
+/* Links in the mobile menu */
+.mobile-link {
+    display: block;
+    text-align: left;
+    padding: 0.75rem 0.5rem;
+    border-radius: 4px;
+    color: #e5e5e5;
+}
+.mobile-link:hover {
+    background: #2e2e2e;
+}
+
+/* ---------- Hero carousel ---------- */
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease, visibility 0.7s;
+}
+.hero-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hero-dash {
+    position: relative;
+    height: 4px;
+    width: 24px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.35);
+    overflow: hidden;
+    transition: width 0.3s ease, background 0.2s;
+}
+.hero-dash:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+.hero-dash.is-active {
+    width: 48px;
+}
+.hero-dash.is-active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--cr-orange);
+    transform-origin: left;
+    animation: hero-progress var(--hero-interval) linear forwards;
+}
+
+@keyframes hero-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+/* ---------- Misc ---------- */
+.line-clamp-1, .line-clamp-2, .line-clamp-3, .line-clamp-4 {
+    overflow: hidden;
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
+/* ---------- Hero overlap: first row slides up over the bottom of the hero ---------- */
+#content-container.hero-overlap {
+    position: relative;
+    z-index: 5;
+    margin-top: -96px;
+    padding-top: 0;
+}
+#hero-section {
+    height: 520px;
+}
+@media (min-width: 640px)  { #hero-section { height: 620px; } }
+@media (min-width: 1024px) { #hero-section { height: max(640px, calc(100vh - 60px + 40px)); max-height: 820px; } }
+
+/* ---------- Dim page behind the Categories menu ---------- */
+.menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.15s ease, visibility 0.15s;
+}
+.menu-backdrop.is-open { opacity: 1; visibility: visible; }
+
+/* ---------- Poster rows: room around cards so the hover panel is not clipped ---------- */
+.card-row {
+    padding: 12px 10px;
+    margin: -12px -10px;
+    scroll-padding-inline: 10px;
+}
+
+/* ---------- Poster card hover panel (desktop only) ---------- */
+.anime-card { position: relative; }
+
+.card-hover {
+    display: none;
+    position: absolute;
+    inset: -8px;
+    z-index: 20;
+    padding: 14px 12px 12px;
+    background: #141414;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+}
+@media (hover: hover) and (min-width: 768px) {
+    .anime-card:hover .card-hover { display: flex; }
+    .card-touch-bookmark { display: none; }
+}
+@media (hover: none), (max-width: 767px) {
+    .card-touch-bookmark { display: flex; }
+}
+
+.card-hover-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.card-hover-meta { font-size: 14px; color: #d4d4d4; margin-top: 4px; }
+.card-hover-meta i { color: #d4d4d4; }
+.card-hover-meta span { color: #a3a3a3; }
+.card-hover-info { font-size: 14px; color: #a3a3a3; }
+.card-hover-desc {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #e5e5e5;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.card-hover-actions {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-top: 10px;
+}
+.card-hover-actions button {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--cr-orange);
+    font-size: 22px;
+    line-height: 1;
+    transition: transform 0.15s;
+}
+.card-hover-actions button:hover { transform: scale(1.15); }
