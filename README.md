@@ -22,7 +22,9 @@ A fan-made Crunchyroll-style anime streaming site built with HTML, Tailwind CSS 
 | `index.html` | Page layout, header, footer and modals |
 | `styles.css` | Custom styles (hero, hover panel, menus) |
 | `script.js` | App logic: data fetching, rendering, search, player |
-| `favicon.svg` | Site icon (also embedded in `index.html`) |
+| `manifest.json` | Web App Manifest for PWA installation |
+| `sw.js` | Service worker for offline handling & PWA install |
+| `assets/` | App icons, favicon and maskable icons |
 
 ## Run it
 

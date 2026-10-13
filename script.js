@@ -1544,4 +1544,11 @@
        initHeroSwipe();
        updateWatchlistCount();
        loadHome();
+
+       // Register service worker for PWA installability
+       if ('serviceWorker' in navigator) {
+           navigator.serviceWorker.register('./sw.js').catch(err => {
+               console.debug('Service worker registration skipped:', err);
+           });
+       }
    });
