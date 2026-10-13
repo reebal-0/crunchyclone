@@ -14,7 +14,7 @@
      'https://other-player.com/embed/{id}?ep={episode}&lang={audio}'
    ========================================================================== */
 
-   const PLAYER_URL_TEMPLATE = 'https://ratingsandtrailers.com/anime/{id}/{episode}/{audio}';
+   const PLAYER_URL_TEMPLATE = 'https://vidnest.fun/anime/{id}/{episode}/{audio}';
 
 
    /* ==========================================================================
